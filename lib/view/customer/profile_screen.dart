@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ordring/components/custom_button.dart';
 
-import '../auth/login as customer.dart';
+import '../../auth/login as customer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -28,7 +28,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               "D-Coders",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
+
           ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          _auth.currentUser?.email.toString() ?? "",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         SizedBox(
           height: 40,

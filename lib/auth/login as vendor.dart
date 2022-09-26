@@ -1,10 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_ordring/auth/login%20as%20customer.dart';
+import 'package:food_ordring/auth/login%20as%20vendor.dart';
+import 'package:food_ordring/view/customer/cretate_profile.dart';
+import 'package:food_ordring/view/vendor/vendor_dashboard.dart';
 
 import '../components/custom_button.dart';
 import '../constants/color_constants.dart';
 import '../main.dart';
+import '../view/customer/customer_dashboard.dart';
+import '../view/customer/profile_screen.dart';
 
 class LoginAsVendor extends StatefulWidget {
   const LoginAsVendor({Key? key}) : super(key: key);
@@ -14,6 +21,9 @@ class LoginAsVendor extends StatefulWidget {
 }
 
 class _LoginAsVendorState extends State<LoginAsVendor> {
+  final _auth = FirebaseAuth.instance;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -101,73 +111,33 @@ class _LoginAsVendorState extends State<LoginAsVendor> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextFormField(
-                          // validator: (mobile) {
-                          //   if (mobile.isEmpty) {
-                          //     return 'Mobile no. is required.';
-                          //   } else if (mobile.length != 10) {
-                          //     return 'Mobile no. should be of 10 digits.';
-                          //   }
-                          //   return null;
-                          // },
-                          style: TextStyle(fontSize: 14),
-                          keyboardType: TextInputType.name,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9+]"))
-                          ],
                           decoration: InputDecoration(
-                              prefixText: '  ',
-                              contentPadding: EdgeInsets.all(15),
-                              hintText: 'Enter Email ID',
-                              hintStyle: TextStyle(color: kGreyFont),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: kGreyBackground)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: kGreyBackground),
-                                  borderRadius: BorderRadius.circular(10))),
-                          onChanged: (value) {
-                            //_con.mobile = "$value";
-                          },
-                          // maxLength: 10,
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                                  borderSide: BorderSide(color: Colors.black)),
+                              border: OutlineInputBorder(),
+                              prefixIcon: Icon(Icons.email),
+                              labelText: 'email',
+                              labelStyle: TextStyle(color: Colors.black)),
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
                         ),
                         SizedBox(
                           height: 20,
                         ),
                         TextFormField(
-                          // validator: (mobile) {
-                          //   if (mobile.isEmpty) {
-                          //     return 'Mobile no. is required.';
-                          //   } else if (mobile.length != 10) {
-                          //     return 'Mobile no. should be of 10 digits.';
-                          //   }
-                          //   return null;
-                          // },
-                          style: TextStyle(fontSize: 14),
-                          keyboardType: TextInputType.name,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp("[0-9+]"))
-                          ],
                           decoration: InputDecoration(
-                              prefixText: '  ',
-                              contentPadding: EdgeInsets.all(15),
-                              hintText: 'Enter Your Password',
-                              hintStyle: TextStyle(color: kGreyFont),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide:
-                                      BorderSide(color: kGreyBackground)),
                               focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: kGreyBackground),
-                                  borderRadius: BorderRadius.circular(10))),
-                          onChanged: (value) {
-                            //_con.mobile = "$value";
-                          },
-                          // maxLength: 10,
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                                  borderSide: BorderSide(color: Colors.black)),
+                              border: OutlineInputBorder(),
+                              prefixIcon: Icon(Icons.password),
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.black)),
+                          keyboardType: TextInputType.emailAddress,
+                          controller: passwordController,
                         ),
                         SizedBox(height: 40),
                         Padding(
@@ -176,7 +146,28 @@ class _LoginAsVendorState extends State<LoginAsVendor> {
                             children: [
                               CustomButton(
                                 title: 'Login',
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  if (emailController.text.isNotEmpty &&
+                                      passwordController.text.isNotEmpty) {
+                                    try {
+                                      _auth
+                                          .signInWithEmailAndPassword(
+                                          email: emailController.text,
+                                          password: passwordController.text)
+                                          .then((value) => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    VendorDashboard()))
+                                      });
+                                    } catch (e) {
+                                      print("invalid Login");
+                                    }
+                                  } else {
+                                    print("Error");
+                                  }
+                                },
                               ),
                               SizedBox(
                                 height: 40,
@@ -184,20 +175,39 @@ class _LoginAsVendorState extends State<LoginAsVendor> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  // TextButton(
-                                  //     onPressed: () {
-                                  //       Navigator.push(context,
-                                  //           MaterialPageRoute(
-                                  //               builder: (context) {
-                                  //         return MyApp();
-                                  //       }));
-                                  //     },
-                                  //     child: Text(
-                                  //       "Login as Vendor ➤",
-                                  //       style: TextStyle(
-                                  //           color: kOrange,
-                                  //           fontWeight: FontWeight.bold),
-                                  //     )),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                                  return CreateProfileCustomer();
+                                                }));
+                                      },
+                                      child: Text(
+                                        "Create Account",
+                                        style: TextStyle(
+                                            color: kOrange,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                                  return LoginAsCustomer();
+                                                }));
+                                      },
+                                      child: Text(
+                                        "Customer Login",
+                                        style: TextStyle(
+                                            color: kOrange,
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                 ],
                               )
                             ],

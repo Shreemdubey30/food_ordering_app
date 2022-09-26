@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_ordring/auth/login%20as%20vendor.dart';
-import 'package:food_ordring/view/cretate_profile.dart';
+import 'package:food_ordring/view/customer/cretate_profile.dart';
 
 import '../components/custom_button.dart';
 import '../constants/color_constants.dart';
 import '../main.dart';
-import '../view/customer_dashboard.dart';
+import '../view/customer/customer_dashboard.dart';
 
 class LoginAsCustomer extends StatefulWidget {
   const LoginAsCustomer({Key? key}) : super(key: key);
@@ -182,6 +182,25 @@ class _LoginAsCustomerState extends State<LoginAsCustomer> {
                                       },
                                       child: Text(
                                         "Create Account",
+                                        style: TextStyle(
+                                            color: kOrange,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return LoginAsVendor();
+                                        }));
+                                      },
+                                      child: Text(
+                                        "Login Vendor",
                                         style: TextStyle(
                                             color: kOrange,
                                             fontWeight: FontWeight.bold),

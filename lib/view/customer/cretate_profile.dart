@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:food_ordring/auth/login%20as%20customer.dart';
 import 'package:food_ordring/components/custom_button.dart';
 
-import '../constants/color_constants.dart';
+import '../../constants/color_constants.dart';
 
 class CreateProfileCustomer extends StatefulWidget {
   const CreateProfileCustomer({Key? key}) : super(key: key);

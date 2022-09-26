@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:food_ordring/view/restaurants_details_page.dart';
+import 'package:food_ordring/view/customer/restaurants_details_page.dart';
 import 'package:readmore/readmore.dart';
 
-import '../constants/color_constants.dart';
+import '../../constants/color_constants.dart';
+
 
 class CustomerHome extends StatefulWidget {
   const CustomerHome({Key? key}) : super(key: key);

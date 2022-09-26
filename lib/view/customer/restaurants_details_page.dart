@@ -5,8 +5,9 @@ import 'package:flutter/rendering.dart';
 import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../components/custom_button.dart';
-import '../constants/color_constants.dart';
+import '../../components/custom_button.dart';
+import '../../constants/color_constants.dart';
+
 
 class RestaurantsDetails extends StatefulWidget {
   const RestaurantsDetails(
@@ -141,8 +142,12 @@ class _RestaurantsDetailsState extends State<RestaurantsDetails> {
               child: CustomButton(
                 title: 'Order Now',
                 onPressed: () {
-                  launchUrl(Uri.parse(
-                      "whatsapp://send?phone=918839649499&text=${orderFood.text}"));
+                  if (orderFood.text.isNotEmpty) {
+                    launchUrl(Uri.parse(
+                        "whatsapp://send?phone=918839649499&text=${orderFood.text}"));
+                  } else {
+                    print("please enter food items");
+                  }
                 },
               ),
             )
