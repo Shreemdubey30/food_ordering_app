@@ -93,9 +93,43 @@ class _RestaurantsDetailsState extends State<RestaurantsDetails> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width * 1.2,
                 child: CachedNetworkImage(
+                  placeholder: (a, b) => Center(
+                      child: Container(child: CircularProgressIndicator())),
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.fill,
                   imageUrl: widget.menu,
                 )),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Enter Food Items To Order",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  color: Colors.grey[200],
+                  height: 200,
+                  width: 400,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      maxLines: 10,
+                      style: TextStyle(fontSize: 23),
+                      decoration: InputDecoration(),
+                    ),
+                  )),
+            ),
             SizedBox(
               height: 30,
             ),
