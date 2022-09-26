@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:readmore/readmore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../components/custom_button.dart';
 import '../constants/color_constants.dart';
@@ -24,6 +25,7 @@ class RestaurantsDetails extends StatefulWidget {
 }
 
 class _RestaurantsDetailsState extends State<RestaurantsDetails> {
+  TextEditingController orderFood = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,6 +126,7 @@ class _RestaurantsDetailsState extends State<RestaurantsDetails> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      controller: orderFood,
                       maxLines: 10,
                       style: TextStyle(fontSize: 23),
                       decoration: InputDecoration(),
@@ -137,7 +140,10 @@ class _RestaurantsDetailsState extends State<RestaurantsDetails> {
               width: MediaQuery.of(context).size.width / 2,
               child: CustomButton(
                 title: 'Order Now',
-                onPressed: () {},
+                onPressed: () {
+                  launchUrl(Uri.parse(
+                      "whatsapp://send?phone=918839649499&text=${orderFood.text}"));
+                },
               ),
             )
           ],
